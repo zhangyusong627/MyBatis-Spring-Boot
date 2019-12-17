@@ -2,36 +2,92 @@
 <!DOCTYPE generatorConfiguration
         PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
-
 <generatorConfiguration>
-    <properties resource="application.properties"/>
+    <!--导入属性配置 -->
+    <!--<properties url="file:////Users/roderickWang/git/caijiajia/arenamgr/mybatisGenerator/generator.properties"></properties>-->
+    <!--<properties url="file:////Users/zlh/cjj/arenamgr/mybatisGenerator/generator.properties"></properties>-->
 
-    <context id="Mysql" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+    <!--指定特定数据库的jdbc驱动jar包的位置 -->
+    <classPathEntry location="/Users/zhuangyusong/personal_git/MyBatis-Spring-Boot/src/main/resources/generator/mysql-connector-java-5.1.37-bin.jar"/>
+
+    <context id="default" targetRuntime="MyBatis3">
+
         <property name="beginningDelimiter" value="`"/>
         <property name="endingDelimiter" value="`"/>
+        <!-- optional，旨在创建class时，对注释进行控制 -->
+        <commentGenerator>
+            <property name="suppressDate" value="true"/>
+        </commentGenerator>
 
-        <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
-            <property name="mappers" value="tk.mybatis.springboot.util.MyMapper"/>
-        </plugin>
-
-        <jdbcConnection driverClass="${druid.driver-class}"
-                        connectionURL="${druid.url}"
-                        userId="${druid.username}"
-                        password="${druid.password}">
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/aibankfund"
+                        userId="root" password="zhangyusong">
         </jdbcConnection>
 
-        <javaModelGenerator targetPackage="tk.mybatis.springboot.model" targetProject="src/main/java"/>
+        <!-- 非必需，类型处理器，在数据库类型和java类型之间的转换控制-->
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
 
-        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources"/>
+        <!-- Model模型生成器,用来生成含有主键key的类，记录类 以及查询Example类
+            targetPackage     指定生成的model生成所在的包名
+            targetProject     指定在该项目下所在的路径
+        -->
+        <javaModelGenerator targetPackage="tk.mybatis.springboot.model" targetProject="/Users/zhuangyusong/personal_git/MyBatis-Spring-Boot/src/main/java/tk/mybatis/springboot/model">
+            <!-- 是否对model添加 构造函数 -->
+            <property name="constructorBased" value="false"/>
+            <!-- 是否允许子包，即targetPackage.schemaName.tableName -->
+            <property name="enableSubPackages" value="false"/>
+            <!-- 建立的Model对象是否 不可改变  即生成的Model对象不会有 setter方法，只有构造方法 -->
+            <property name="immutable" value="false"/>
+            <!-- 给Model添加一个父类 -->
+            <!-- 是否对类CHAR类型的列的数据进行trim操作 -->
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
 
-        <javaClientGenerator targetPackage="tk.mybatis.springboot.mapper" targetProject="src/main/java"
-                             type="XMLMAPPER"/>
 
-        <table tableName="%">
-            <!--mysql 配置-->
-            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
-            <!--oracle 配置-->
-            <!--<generatedKey column="id" sqlStatement="select SEQ_{1}.nextval from dual" identity="false" type="pre"/>-->
-        </table>
+        <!-- 生成mapper xml文件 -->
+        <sqlMapGenerator targetPackage="mapper" targetProject="/Users/zhuangyusong/personal_git/MyBatis-Spring-Boot/src/main/resources/mapper">
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+
+
+        <!--  生成mapper接口
+                type="ANNOTATEDMAPPER",生成Java Model 和基于注解的Mapper对象
+                type="MIXEDMAPPER",生成基于注解的Java Model 和相应的Mapper对象
+                type="XMLMAPPER",生成SQLMap XML文件和独立的Mapper接口
+        -->
+        <javaClientGenerator targetPackage="tk.mybatis.springboot.mapper" targetProject="/Users/zhuangyusong/personal_git/MyBatis-Spring-Boot/src/main/java/tk/mybatis/springboot/mapper" type="XMLMAPPER">
+
+            <property name="enableSubPackages" value=""/>
+
+            <!-- 定义Maper.java 源代码中的ByExample() 方法的可视性，可选的值有：public;private; protected;default
+                    注意：如果 targetRuntime="MyBatis3",此参数被忽略-->
+            <property name="exampleMethodVisibility" value=""/>
+
+            <!--方法名计数器 Important note: this property is ignored if the target runtime is MyBatis3.-->
+            <property name="methodNameCalculator" value=""/>
+
+            <!--为生成的接口添加父接口-->
+            <property name="rootInterface" value=""/>
+
+        </javaClientGenerator>
+
+        <!--<table tableName="bank_pipeline_process" delimitIdentifiers="true" delimitAllColumns="true"></table>-->
+        <!--<table tableName="bank_pipeline_task" delimitIdentifiers="true" delimitAllColumns="true"></table>-->
+        <!--<table tableName="batch_job_status" delimitIdentifiers="true" delimitAllColumns="true"></table>-->
+        <!--<table tableName="credit_info" delimitIdentifiers="true" delimitAllColumns="true"></table>-->
+        <!--<table tableName="loan_income_info_log" delimitIdentifiers="true" delimitAllColumns="true"></table>-->
+        <!--<table tableName="pre_open_acct" delimitIdentifiers="true" delimitAllColumns="true"></table>-->
+        <!--<table tableName="reconciliation_dif_log" delimitIdentifiers="true" delimitAllColumns="true"></table>-->
+        <!--<table tableName="reconciliation_summary" delimitIdentifiers="true" delimitAllColumns="true"></table>-->
+        <!--<table tableName="stage_order" delimitIdentifiers="true" delimitAllColumns="true"></table>-->
+        <!--<table tableName="stage_plan" delimitIdentifiers="true" delimitAllColumns="true"></table>-->
+        <!--<table tableName="trans_log" delimitIdentifiers="true" delimitAllColumns="true"></table>-->
+        <!--<table tableName="contract_log" delimitIdentifiers="true" delimitAllColumns="true"></table>-->
+        <!--<table tableName="bank_2_account" delimitIdentifiers="true" delimitAllColumns="true"></table>-->
+        <table tableName="bf_process_info" delimitIdentifiers="true" delimitAllColumns="true"></table>
+
+
     </context>
 </generatorConfiguration>

@@ -7,10 +7,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
 import tk.mybatis.springboot.Application;
-import tk.mybatis.springboot.model.Country;
-import tk.mybatis.springboot.service.CountryService;
-
-import java.util.List;
+import tk.mybatis.springboot.mapper.BfProcessInfoMapper;
+import tk.mybatis.springboot.mapper.TestMapper;
 
 /**
  * @author liuzh
@@ -22,14 +20,14 @@ import java.util.List;
 public class CountryServiceTest {
 
     @Autowired
-    private CountryService countryService;
+    private TestMapper testMapper;
+
+    @Autowired
+    private BfProcessInfoMapper bfProcessInfoMapper;
 
     @Test
     public void test() {
-        Country country = new Country();
-        List<Country> all = countryService.getAll(country);
-        for (Country c : all) {
-            System.out.println(c.getCountryname());
-        }
+        int i = bfProcessInfoMapper.selectData();
+        System.err.println("成功查询到"+i+"条");
     }
 }
