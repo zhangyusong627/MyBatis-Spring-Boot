@@ -20,7 +20,7 @@
         </commentGenerator>
 
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3306/aibankfund"
+                        connectionURL="jdbc:mysql://localhost:3306/psbcxjfund"
                         userId="root" password="zhangyusong">
         </jdbcConnection>
 
@@ -86,7 +86,7 @@
         <!--<table tableName="trans_log" delimitIdentifiers="true" delimitAllColumns="true"></table>-->
         <!--<table tableName="contract_log" delimitIdentifiers="true" delimitAllColumns="true"></table>-->
         <!--<table tableName="bank_2_account" delimitIdentifiers="true" delimitAllColumns="true"></table>-->
-        <table tableName="bf_process_info" delimitIdentifiers="true" delimitAllColumns="true"></table>
+        <table tableName="credit_info" delimitIdentifiers="true" delimitAllColumns="true"></table>
 
 
     </context>
