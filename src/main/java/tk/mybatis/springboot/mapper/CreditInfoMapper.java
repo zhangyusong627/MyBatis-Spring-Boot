@@ -6,10 +6,10 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.json.JSONObject;
+import org.springframework.stereotype.Service;
 import tk.mybatis.springboot.model.CreditInfo;
 import tk.mybatis.springboot.model.CreditInfoExample;
 import tk.mybatis.springboot.model.CreditInfoWithBLOBs;
-
 public interface CreditInfoMapper {
 
     @Select("select response_info from credit_info where uid = #{uid,jdbcType=VARCHAR} and channel = #{channel,jdbcType=VARCHAR}")
